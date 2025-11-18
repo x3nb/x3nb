@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minimal Portfolio – AI Websites & Digital Art</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        color: #000;
+        font-family: "Courier New", Courier, monospace; /* typewriter font */
+        line-height: 1.6;
+    }
+
+    header {
+        padding: 40px;
+        text-align: center;
+        font-size: 2rem;
+        border-bottom: 1px solid #000;
+    }
+
+    section {
+        padding: 40px;
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+        border-left: 5px solid black;
+        padding-left: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* SCROLLING GALLERY */
+    .scroll-gallery {
+        white-space: nowrap;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+    .scroll-gallery img {
+        height: 250px;
+        margin-right: 20px;
+        transition: transform .3s;
+        cursor: zoom-in;
+    }
+    .scroll-gallery img:hover {
+        transform: scale(1.1);
+    }
+
+    /* GRID GALLERY */
+    .grid-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    .grid-gallery img {
+        width: 100%;
+        border: 1px solid #000;
+        cursor: zoom-in;
+        transition: transform .3s;
+    }
+    .grid-gallery img:hover {
+        transform: scale(1.05);
+    }
+
+    /* ART DESCRIPTION */
+    .item-description {
+        font-size: 0.9rem;
+        margin-top: 10px;
+        color: #333;
+    }
+
+    /* LIGHTBOX (Zoom Modal) */
+    #lightbox {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        justify-content: center;
+        align-items: center;
+        cursor: zoom-out;
+    }
+    #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 5px solid white;
+    }
+
+    /* INTERACTIVE ANIMATION SAMPLE */
+    .animate-card {
+        border: 1px solid #000;
+        padding: 40px;
+        text-align: center;
+        transition: transform .4s, background .4s;
+        cursor: pointer;
+    }
+    .animate-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        background: #f4f4f4;
+    }
+
+    /* CHATBOT DEMO BUBBLE */
+    .chat-demo {
+        border: 1px solid #000;
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+        border-radius: 10px;
+    }
+    .chat-message {
+        padding: 10px;
+        border-left: 3px solid black;
+        margin-bottom: 10px;
+        background: #fafafa;
+    }
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <strong>Minimal Portfolio</strong><br>
+    AI-Enhanced Websites · Interactive Animations · Digital Art
+</header>
+
+<section>
+    <h2>Scrolling Gallery</h2>
+    <div class="scroll-gallery">
+        <img src="https://via.placeholder.com/400x250?text=Art+1" alt="Artwork 1">
+        <img src="https://via.placeholder.com/400x250?text=Art+2" alt="Artwork 2">
+        <img src="https://via.placeholder.com/400x250?text=Art+3" alt="Artwork 3">
+    </div>
+</section>
+
+<section>
+    <h2>Grid Gallery</h2>
+    <div class="grid-gallery">
+        <div>
+            <img src="https://via.placeholder.com/500x500?text=Art+A" alt="Art A">
+            <div class="item-description">Artwork A — digital + AI fusion exploring minimalism.</div>
+        </div>
+
+        <div>
+            <img src="https://via.placeholder.com/500x500?text=Art+B" alt="Art B">
+            <div class="item-description">Artwork B — generative form inspired by organic motion.</div>
+        </div>
+
+        <div>
+            <img src="https://via.placeholder.com/500x500?text=Art+C" alt="Art C">
+            <div class="item-description">Artwork C — monochrome style with layered texture.</div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Interactive Animations</h2>
+
+    <div class="animate-card">
+        Hover me — this is a sample interactive animation effect.<br>
+        Brands love subtle UX interactions LIKE THIS.
+    </div>
+</section>
+
+<section>
+    <h2>Chatbot Demo Preview (For Brands)</h2>
+
+    <div class="chat-demo">
+        <div class="chat-message"><strong>Chatbot:</strong> Hi! How can I assist your customers today?</div>
+        <div class="chat-message"><strong>You:</strong> Can you show me product suggestions?</div>
+        <div class="chat-message"><strong>Chatbot:</strong> Absolutely — here are personalized recommendations.</div>
+    </div>
+
+    <p style="font-size:0.9rem; margin-top:15px;">
+        *This is a preview. I design fully interactive AI-powered chatbots for business websites.*
+    </p>
+</section>
+
+<!-- LIGHTBOX SCRIPT -->
+<div id="lightbox"><img src=""></div>
+
+<script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+
+    document.addEventListener('click', e => {
+        if (e.target.tagName === 'IMG' && e.target.closest('.grid-gallery, .scroll-gallery')) {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = e.target.src;
+        } else if (e.target.id === 'lightbox' || e.target === lightboxImg) {
+            lightbox.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
