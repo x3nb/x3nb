@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xen — AI Websites & Digital Art</title>
+
+<style>
+    /* GLOBAL */
+    :root {
+        --bg: #ffffff;
+        --text: #000000;
+        --border: #000000;
+        --card-bg: #fafafa;
+    }
+
+    body.dark {
+        --bg: #111;
+        --text: #f5f5f5;
+        --border: #f5f5f5;
+        --card-bg: #222;
+    }
+
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Courier New", Courier, monospace;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+        padding: 50px;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 3rem;
+        letter-spacing: 2px;
+    }
+
+    header p {
+        margin-top: 10px;
+        font-size: 1.1rem;
+        opacity: 0.8;
+    }
+
+    /* DARK MODE BUTTON */
+    .toggle-dark {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 6px 12px;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+    section {
+        padding: 40px;
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    h2 {
+        border-left: 5px solid var(--border);
+        padding-left: 10px;
+        margin-bottom: 20px;
+        font-size: 1.7rem;
+    }
+
+    /* SCROLLING GALLERY */
+    .scroll-gallery {
+        white-space: nowrap;
+        overflow-x: auto;
+        padding-bottom: 15px;
+    }
+    .scroll-gallery img {
+        height: 250px;
+        margin-right: 20px;
+        border: 1px solid var(--border);
+        transition: transform .3s;
+        cursor: zoom-in;
+    }
+    .scroll-gallery img:hover {
+        transform: scale(1.1);
+    }
+
+    /* GRID GALLERY */
+    .grid-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    .grid-gallery img {
+        width: 100%;
+        border: 1px solid var(--border);
+        transition: transform .3s;
+        cursor: zoom-in;
+    }
+
+    .grid-gallery img:hover {
+        transform: scale(1.05);
+    }
+
+    .item-description {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        opacity: 0.85;
+    }
+
+    /* INTERACTIVE ANIMATION */
+    .animate-card {
+        padding: 40px;
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+        text-align: center;
+        transition: transform .3s, background .3s;
+        cursor: pointer;
+    }
+    .animate-card:hover {
+        transform: translateY(-10px) scale(1.02);
+    }
+
+    /* LIGHTBOX */
+    #lightbox {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        justify-content: center;
+        align-items: center;
+    }
+    #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 6px solid #fff;
+        cursor: zoom-out;
+    }
+
+    /* CHATBOT SECTION */
+    .chat-section {
+        border: 1px solid var(--border);
+        padding: 30px;
+        border-radius: 10px;
+        background: var(--card-bg);
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .chat-window {
+        height: 250px;
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        padding: 10px;
+        background: var(--bg);
+    }
+
+    .chat-msg {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-left: 3px solid var(--border);
+        background: var(--card-bg);
+    }
+
+    .chat-input {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .chat-input input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+    }
+
+    .chat-input button {
+        padding: 8px 14px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<button class="toggle-dark" onclick="toggleDark()">Toggle Dark Mode</button>
+
+<header>
+    <h1>XEN</h1>
+    <p>AI Websites · Interactive Experiences · Digital Art</p>
+</header>
+
+<section>
+    <h2>Scrolling Gallery</h2>
+    <div class="scroll-gallery">
+        <img src="https://via.placeholder.com/400x250?text=Art+1" alt="">
+        <img src="https://via.placeholder.com/400x250?text=Art+2" alt="">
+        <img src="https://via.placeholder.com/400x250?text=Art+3" alt="">
+    </div>
+</section>
+
+<section>
+    <h2>Grid Gallery</h2>
+    <div class="grid-gallery">
+        <div>
+            <img src="https://via.placeholder.com/500x500?text=Art+A">
+            <div class="item-description">Artwork A — minimal AI-infused monochrome design.</div>
+        </div>
+        <div>
+            <img src="https://via.placeholder.com/500x500?text=Art+B">
+            <div class="item-description">Artwork B — generative texture layered with digital strokes.</div>
+        </div>
+        <div>
+            <img src="https://via.placeholder.com/500x500?text=Art+C">
+            <div class="item-description">Artwork C — symbolic composition blending code + art.</div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Interactive Animations</h2>
+    <div class="animate-card">
+        Hover me — brands love clean micro-interactions like this.
+    </div>
+</section>
+
+<section>
+    <h2>Live Chatbot Demo</h2>
+
+    <div class="chat-section">
+        <div class="chat-window" id="chatWindow"></div>
+
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type a message…">
+            <button onclick="sendMsg()">Send</button>
+        </div>
+    </div>
+
+    <p style="font-size:0.8rem; text-align:center; margin-top:10px;">
+        *Fully customizable AI chatbots available for brand websites.*
+    </p>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox"><img src=""></div>
+
+<script>
+/* LIGHTBOX */
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = lightbox.querySelector("img");
+
+document.addEventListener("click", e => {
+    if (e.target.tagName === "IMG" && e.target.closest(".grid-gallery, .scroll-gallery")) {
+        lightbox.style.display = "flex";
+        lightboxImage.src = e.target.src;
+    }
+    if (e.target === lightbox) {
+        lightbox.style.display = "none";
+    }
+});
+
+/* DARK MODE TOGGLE */
+function toggleDark() {
+    document.body.classList.toggle("dark");
+}
+
+/* SIMPLE LOCAL CHATBOT */
+function sendMsg() {
+    const input = document.getElementById("chatInput");
+    const windowEl = document.getElementById("chatWindow");
+
+    if (!input.value.trim()) return;
+
+    // Add user message
+    windowEl.innerHTML += `<div class="chat-msg"><strong>You:</strong> ${input.value}</div>`;
+
+    // VERY SIMPLE bot logic
+    const reply = getBotReply(input.value);
+    windowEl.innerHTML += `<div class="chat-msg"><strong>Bot:</strong> ${reply}</div>`;
+
+    windowEl.scrollTop = windowEl.scrollHeight;
+    input.value = "";
+}
+
+function getBotReply(msg) {
+    msg = msg.toLowerCase();
+
+    if (msg.includes("hello") || msg.includes("hi")) return "Hey! How can I help your brand today?";
+    if (msg.includes("website")) return "I create clean, interactive websites with AI-enhanced UX.";
+    if (msg.includes("art")) return "I blend generative AI with digital design to create unique visuals.";
+    if (msg.includes("chatbot")) return "I design custom AI chatbots for business sites — want a demo?";
+    if (msg.includes("price") || msg.includes("cost")) return "Pricing varies — tell me your project needs and I’ll estimate it.";
+
+    return "Tell me more! I’d love to help you build something amazing.";
+}
+</script>
+
+</body>
+</html>
