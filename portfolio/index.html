@@ -73,22 +73,29 @@
         font-size: 1.7rem;
     }
 
-    /* SCROLLING GALLERY */
-    .scroll-gallery {
-        white-space: nowrap;
-        overflow-x: auto;
-        padding-bottom: 15px;
-    }
-    .scroll-gallery img {
-        height: 250px;
-        margin-right: 20px;
-        border: 1px solid var(--border);
-        transition: transform .3s;
-        cursor: zoom-in;
-    }
-    .scroll-gallery img:hover {
-        transform: scale(1.1);
-    }
+   /* SCROLLING GALLERY — FIXED VERSION */
+.scroll-gallery {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 20px;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    cursor: grab;
+}
+
+.scroll-gallery img {
+    height: 250px;
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    transition: transform .3s;
+    cursor: zoom-in;
+}
+
+.scroll-gallery img:hover {
+    transform: scale(1.1);
+}
+
 
     /* GRID GALLERY */
     .grid-gallery {
