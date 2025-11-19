@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database & Membership System Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f1b2e 0%, #1a2b45 50%, #243b55 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e6e6e6;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(100, 200, 255, 0.7);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #a0e7e7;
+            margin-bottom: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .nav-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .topic-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .topic-nav a {
+            background: linear-gradient(135deg, #4a8eff 0%, #2a5cad 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .topic-nav a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(100, 180, 255, 0.4);
+        }
+        
+        .content-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .topic-card {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: #ffffff;
+            border-radius: 20px;
+            z-index: -1;
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+        }
+        
+        .topic-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .topic-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #4a8eff;
+            padding-bottom: 15px;
+        }
+        
+        .topic-icon {
+            font-size: 28px;
+            color: #4a8eff;
+            margin-right: 15px;
+            background: #e6f2ff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .topic-title {
+            font-size: 1.8rem;
+            color: #2a5cad;
+            font-weight: 700;
+        }
+        
+        .topic-synopsis {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4a8eff;
+        }
+        
+        .synopsis-title {
+            font-size: 1.2rem;
+            color: #2a5cad;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .synopsis-text {
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .topic-content {
+            color: #333333;
+        }
+        
+        .topic-content p {
+            margin-bottom: 15px;
+        }
+        
+        .topic-content a {
+            color: #2a5cad;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .topic-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .topic-content code {
+            background: #e6f2ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #2a5cad;
+            display: block;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .db-table th {
+            background-color: #2a5cad;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .db-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .db-table tr:nth-child(even) {
+            background-color: #f2f7ff;
+        }
+        
+        .db-table tr:hover {
+            background-color: #e6f2ff;
+        }
+        
+        .highlight {
+            background-color: #fff8e1;
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #4a8eff;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            color: #a0e7e7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .topic-nav {
+                flex-direction: column;
+            }
+            
+            .topic-nav a {
+                text-align: center;
+            }
+            
+            .topic-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 90px 100px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 100px 100px;
+            animation: twinkling 3s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+        
+        @keyframes twinkling {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Database & Membership System Builder</h1>
+            <p class="subtitle">Learn how to create a complete membership system with user registration, profiles, and content sharing functionality</p>
+            <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Search Engine</a>
+        </header>
+        
+        <div class="nav-container">
+            <div class="topic-nav">
+                <a href="#database-design"><i class="fas fa-database"></i> Database Design</a>
+                <a href="#registration"><i class="fas fa-user-plus"></i> Registration System</a>
+                <a href="#login"><i class="fas fa-sign-in-alt"></i> Login/Logout</a>
+                <a href="#profile"><i class="fas fa-id-card"></i> User Profiles</a>
+                <a href="#content"><i class="fas fa-image"></i> Content Sharing</a>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <!-- Database Design -->
+            <div id="database-design" class="topic-card">
+                <div class="topic-header">
+                    <div class="topic-icon"><i class="fas fa-database"></i></div>
+                    <h2 class="topic-title">Database Design for Membership System</h2>
+                </div>
+                
+                <div class="topic-synopsis">
+                    <h3 class="synopsis-title">Synopsis</h3>
+                    <p class="synopsis-text">Learn how to design the database structure for a membership system including tables for users, profiles, posts, and comments. This section covers essential columns, data types, and relationships.</p>
+                </div>
+                
+                <div class="topic-content">
+                    <p>Building a membership website requires a well-structured database. Here's the essential tables you'll need:</p>
+                    
+                    <h4>Users Table</h4>
+                    <table class="db-table">
+                        <tr>
+                            <th>Column Name</th>
+                            <th>Data Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>INT (Primary Key)</td>
+                            <td>Unique identifier for each user</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>VARCHAR(255)</td>
+                            <td>User's email address (unique)</td>
+                        </tr>
+                        <tr>
+                            <td>password_hash</td>
+                            <td>VARCHAR(255)</td>
+                            <td>Hashed password for security</td>
+                        </tr>
+                        <tr>
+                            <td>created_at</td>
+                            <td>TIMESTAMP</td>
+                            <td>When the account was created</td>
+                        </tr>
+                        <tr>
+                            <td>last_login</td>
+                            <td>TIMESTAMP</td>
+                            <td>Last time the user logged in</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>Profiles Table</h4>
+                    <table class="db-table">
+                        <tr>
+                            <th>Column Name</th>
+                            <th>Data Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>INT (Primary Key)</td>
+                            <td>Unique identifier for each profile</td>
+                        </tr>
+                        <tr>
+                            <td>user_id</td>
+                            <td>INT (Foreign Key)</td>
+                            <td>Links to users table</td>
+                        </tr>
+                        <tr>
+                            <td>avatar_url</td>
+                            <td>VARCHAR(255)</td>
+                            <td>URL to user's avatar image</td>
+                        </tr>
+                        <tr>
+                            <td>bio</td>
+                            <td>TEXT</td>
+                            <td>User's biography/description</td>
+                        </tr>
+                        <tr>
+                            <td>color_scheme</td>
+                            <td>VARCHAR(7)</td>
+                            <td>Preferred color (hex code)</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Implementation Tip:</strong> Use foreign key constraints to maintain referential integrity between tables.</p>
+                </div>
+            </div>
+            
+            <!-- Registration System -->
+            <div id="registration" class="topic-card">
+                <div class="topic-header">
+                    <div class="topic-icon"><i class="fas fa-user-plus"></i></div>
+                    <h2 class="topic-title">User Registration System</h2>
+                </div>
+                
+                <div class="topic-synopsis">
+                    <h3 class="synopsis-title">Synopsis</h3>
+                    <p class="synopsis-text">Create a secure user registration system that collects essential information, validates inputs, and stores user data safely in the database with proper password hashing.</p>
+                </div>
+                
+                <div class="topic-content">
+                    <p>Building a secure registration system involves several key steps:</p>
+                    
+                    <h4>Registration Form Fields</h4>
+                    <ul>
+                        <li>Email address (must be unique)</li>
+                        <li>Password (with confirmation field)</li>
+                        <li>Optional: Display name, avatar upload, bio</li>
+                    </ul>
+                    
+                    <h4>Security Considerations</h4>
+                    <p>Always hash passwords using a strong algorithm like bcrypt:</p>
+                    <code>// Example using Node.js and bcrypt
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+// Hash password before storing
+const hashPassword = async (plainPassword) => {
+    return await bcrypt.hash(plainPassword, saltRounds);
+};
+
+// Compare during login
+const checkPassword = async (plainPassword, hash) => {
+    return await bcrypt.compare(plainPassword, hash);
+};</code>
+                    
+                    <h4>Data Validation</h4>
+                    <p>Always validate on both client and server sides:</p>
+                    <ul>
+                        <li>Validate email format</li>
+                        <li>Ensure password meets complexity requirements</li>
+                        <li>Check for duplicate email addresses</li>
+                        <li>Sanitize all inputs to prevent XSS attacks</li>
+                    </ul>
+                    
+                    <p><strong>Implementation Tip:</strong> Send a verification email to confirm the user's email address before allowing full access.</p>
+                </div>
+            </div>
+            
+            <!-- Login/Logout -->
+            <div id="login" class="topic-card">
+                <div class="topic-header">
+                    <div class="topic-icon"><i class="fas fa-sign-in-alt"></i></div>
+                    <h2 class="topic-title">Login and Logout Functionality</h2>
+                </div>
+                
+                <div class="topic-synopsis">
+                    <h3 class="synopsis-title">Synopsis</h3>
+                    <p class="synopsis-text">Implement secure authentication with session management, password recovery, and proper logout functionality that clears user sessions effectively.</p>
+                </div>
+                
+                <div class="topic-content">
+                    <p>A robust login system needs to handle authentication securely and provide a good user experience.</p>
+                    
+                    <h4>Session Management</h4>
+                    <p>Use HTTP-only cookies for session tokens to prevent XSS attacks:</p>
+                    <code>// Example of setting a secure cookie
+res.cookie('sessionToken', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+});</code>
+                    
+                    <h4>Password Recovery</h4>
+                    <p>Implement a secure password reset flow:</p>
+                    <ol>
+                        <li>User requests password reset with their email</li>
+                        <li>System generates a unique token with expiration (1 hour)</li>
+                        <li>Email sent with reset link containing token</li>
+                        <li>User clicks link, enters new password</li>
+                        <li>System validates token and updates password</li>
+                    </ol>
+                    
+                    <h4>Logout Implementation</h4>
+                    <p>Properly clear session data on logout:</p>
+                    <code>// Example logout endpoint
+app.post('/logout', (req, res) => {
+    // Clear the session cookie
+    res.clearCookie('sessionToken');
+    
+    // Alternatively, if using session storage
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Could not log out');
+        }
+        res.redirect('/login');
+    });
+});</code>
+                    
+                    <p><strong>Security Tip:</strong> Implement rate limiting on login attempts to prevent brute force attacks.</p>
+                </div>
+            </div>
+            
+            <!-- User Profiles -->
+            <div id="profile" class="topic-card">
+                <div class="topic-header">
+                    <div class="topic-icon"><i class="fas fa-id-card"></i></div>
+                    <h2 class="topic-title">Customizable User Profiles</h2>
+                </div>
+                
+                <div class="topic-synopsis">
+                    <h3 class="synopsis-title">Synopsis</h3>
+                    <p class="synopsis-text">Allow users to personalize their profiles with avatars, bios, color preferences, and other customizations while maintaining a consistent user experience.</p>
+                </div>
+                
+                <div class="topic-content">
+                    <p>User profiles help create a personalized experience and build community engagement.</p>
+                    
+                    <h4>Profile Customization Options</h4>
+                    <ul>
+                        <li><span class="highlight">Avatar upload</span> - Allow image upload with size and format restrictions</li>
+                        <li><span class="highlight">Bio/Description</span> - Let users describe themselves (with character limits)</li>
+                        <li><span class="highlight">Color themes</span> - Offer preset color schemes or custom color selection</li>
+                        <li><span class="highlight">Profile links</span> - Social media or website links</li>
+                    </ul>
+                    
+                    <h4>Avatar Implementation</h4>
+                    <p>Handle image uploads securely:</p>
+                    <code>// Example using Multer for file uploads in Express
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/avatars/');
+    },
+    filename: function (req, file, cb) {
+        // Rename file to userid-timestamp.extension
+        const ext = path.extname(file.originalname);
+        cb(null, req.user.id + '-' + Date.now() + ext);
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 1000000 }, // 1MB limit
+    fileFilter: function (req, file, cb) {
+        // Only allow image files
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only image files are allowed'), false);
+        }
+    }
+});</code>
+                    
+                    <h4>Color Preference Implementation</h4>
+                    <p>Store color preferences and apply them dynamically:</p>
+                    <code>// Example: Applying user color preference
+function applyUserTheme(colorScheme) {
+    document.documentElement.style.setProperty('--primary-color', colorScheme);
+    
+    // Or use a class-based approach
+    document.body.classList.remove('theme-blue', 'theme-green', 'theme-red');
+    document.body.classList.add(`theme-${colorScheme}`);
+}
+
+// Load user preference on page load
+const userColor = getUserColorPreference(); // From database
+if (userColor) {
+    applyUserTheme(userColor);
+}</code>
+                </div>
+            </div>
+            
+            <!-- Content Sharing -->
+            <div id="content" class="topic-card">
+                <div class="topic-header">
+                    <div class="topic-icon"><i class="fas fa-image"></i></div>
+                    <h2 class="topic-title">Content Sharing System</h2>
+                </div>
+                
+                <div class="topic-synopsis">
+                    <h3 class="synopsis-title">Synopsis</h3>
+                    <p class="synopsis-text">Implement functionality for users to post images, add comments, and share product links with proper moderation, storage, and display capabilities.</p>
+                </div>
+                
+                <div class="topic-content">
+                    <p>A content sharing system allows users to contribute to your community and share their work.</p>
+                    
+                    <h4>Database Tables for Content</h4>
+                    <table class="db-table">
+                        <tr>
+                            <th>Table Name</th>
+                            <th>Purpose</th>
+                            <th>Key Columns</th>
+                        </tr>
+                        <tr>
+                            <td>posts</td>
+                            <td>Store user posts/images</td>
+                            <td>id, user_id, image_url, caption, created_at</td>
+                        </tr>
+                        <tr>
+                            <td>comments</td>
+                            <td>Store comments on posts</td>
+                            <td>id, post_id, user_id, content, created_at</td>
+                        </tr>
+                        <tr>
+                            <td>products</td>
+                            <td>Store product links</td>
+                            <td>id, post_id, product_url, title, description</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>File Upload for Images</h4>
+                    <p>Implement secure image upload with compression and format conversion:</p>
+                    <code>// Example: Client-side image compression before upload
+function compressImage(file, maxWidth, maxHeight, quality) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                
+                // Calculate new dimensions
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width *= maxHeight / height;
+                        height = maxHeight;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Convert to compressed JPEG
+                canvas.toBlob(resolve, 'image/jpeg', quality);
+            };
+        };
+    });
+}</code>
+                    
+                    <h4>Product Link Handling</h4>
+                    <p>Implement safe link sharing with preview generation:</p>
+                    <code>// Example: Server-side link preview generation
+async function generateLinkPreview(url) {
+    try {
+        const response = await fetch(url);
+        const html = await response.text();
+        
+        // Extract metadata from HTML
+        const titleMatch = html.match(/<title>(.*?)<\/title>/i);
+        const descriptionMatch = html.match(/<meta name="description" content="(.*?)"/i);
+        const imageMatch = html.match(/<meta property="og:image" content="(.*?)"/i);
+        
+        return {
+            title: titleMatch ? titleMatch[1] : '',
+            description: descriptionMatch ? descriptionMatch[1] : '',
+            image: imageMatch ? imageMatch[1] : ''
+        };
+    } catch (error) {
+        console.error('Error generating link preview:', error);
+        return null;
+    }
+}</code>
+                    
+                    <p><strong>Moderation Tip:</strong> Implement content moderation to prevent spam and inappropriate content. Consider using automated filters and reporting systems.</p>
+                </div>
+            </div>
+        </div>
+        
+        <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+        
+        <footer>
+            <p>Database & Membership System Builder &copy; 2023 | Built with ❤️ for web developers</p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.topic-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Back to top button functionality
+        const backToTopBtn = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Add animation to topic cards when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Set initial state for animation
+        document.querySelectorAll('.topic-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
