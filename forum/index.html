@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Forum — Home</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Membership provider script placeholder (Memberstack, Memberful, etc.) -->
+  <!-- Example (Memberstack): <script src="https://api.memberstack.io/static/memberstack.js" data-memberstack="YOUR_MEMBERSTACK_ID" defer></script> -->
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">My Community</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="category.html">Boards</a>
+        <a href="auth.html" id="auth-link">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Welcome to the community</h2>
+      <p>Announcements, support threads, and discussions.</p>
+    </section>
+
+    <section class="categories">
+      <h3>Boards</h3>
+      <ul>
+        <li><a href="category.html?cat=general">General</a> — general discussion</li>
+        <li><a href="category.html?cat=help">Help & Support</a> — ask questions</li>
+        <li><a href="category.html?cat=announcements">Announcements</a> — official news</li>
+      </ul>
+    </section>
+
+    <section class="forum-embed">
+      <h3>Community Feed</h3>
+      <!-- If embedding Circle or other widget, paste embed code here -->
+      <div id="forum-embed" class="embed-placeholder">
+        <!-- Example embed placeholder -->
+        <p>Forum embed will appear here (paste Circle or Discourse embed).</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2026 My Community</small>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
