@@ -1,0 +1,28 @@
+Notes & quick snippets
+
+Memberstack (example)
+
+Add this in <head>: <script src="https://api.memberstack.io/static/memberstack.js" data-memberstack="YOUR_MEMBERSTACK_ID" defer></script>
+Gating: add data-ms-membership="PLAN-ID" attributes on links or sections, see Memberstack docs to hide/show elements.
+Circle embed example (add to topic.html where you want the widget):
+
+Circle provides an embed script in your workspace UI. It typically looks like: <script defer src="https://circle.so/embed.js"></script> <div data-circle-embed data-space="YOUR_SPACE_ID" data-target="#circle-embed-target"></div>
+Discourse:
+
+For a separate hosted Discourse forum, use links to it (easiest).
+For SSO integration, you'll need a server endpoint that returns HMAC-signed payloads to Discourse SSO. I can provide a Node/Serverless example if you want SSO.
+Hosting tips
+
+Deploy to Netlify: drag & drop or connect GitHub. Add your provider scripts and environment variables in provider dashboards (Memberstack, Circle).
+Vercel: similar. For redirects, add a simple catch-all if needed.
+If you want me to wire up a live demo with your Memberstack and Circle test keys I can:
+
+Inject the provider scripts into the templates,
+Add a simple Netlify serverless function (if needed) for SSO or Stripe Checkout,
+Deploy to a demo URL and hand you the repo.
+Tell me which provider(s) you want (Memberstack | Memberful | MemberSpace | Netlify Identity; Circle | Discourse) and whether you want me to:
+
+A) Fill these templates with actual embed scripts and deploy a demo (I’ll need test keys), or
+B) Leave the templates as-is and provide exact copy/paste snippets you can drop in yourself.
+I can also zip the files or create a GitHub repo. Which next step do you want?
+
