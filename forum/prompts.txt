@@ -26,3 +26,17 @@ A) Fill these templates with actual embed scripts and deploy a demo (I’ll need
 B) Leave the templates as-is and provide exact copy/paste snippets you can drop in yourself.
 I can also zip the files or create a GitHub repo. Which next step do you want?
 
+33333
+Great — I’ll prepare a complete set of static HTML templates plus a focused integration guide so you can run a membership forum using entirely static hosting plus third‑party membership/forum providers. Below I’m providing:
+
+A README (integration guide) with recommended provider options and step‑by‑step setup instructions.
+Static template files: index, category, topic, auth (login/register), profile, admin stub.
+A single CSS file and a small JS file showing how to:
+Hook a membership provider (Memberstack / Memberful / MemberSpace)
+Embed a hosted forum (Circle or Discourse)
+Protect/gate content client‑side (for static sites, done via provider)
+Example Netlify _redirects for clean routing (if you host on Netlify)
+You can host these files on Vercel, Netlify, GitHub Pages, or S3+CloudFront. Once you pick which membership provider (Memberstack, Memberful, MemberSpace, or Firebase/Netlify Identity) and whether you want an embedded forum (Circle) or a separate hosted forum (Discourse), I can adapt the templates and add the exact provider keys/snippets.
+
+Below are the files. After these I’ll list short next steps you can pick.
+
