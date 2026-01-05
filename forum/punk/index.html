@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Community — Paper Punk</title>
+
+  <!-- Google fonts for the punk/hand-drawn feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Replace your existing stylesheet with this file -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Optional: membership provider script goes here (Memberstack/Memberful etc.) -->
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner cutout">
+      <div class="brand-wrap">
+        <div class="logo-tape tape-left"></div>
+        <h1 class="brand sticker">MY<br/>COMMUNITY</h1>
+        <div class="logo-tape tape-right"></div>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="category.html" class="nav-link">Boards</a>
+        <a href="auth.html" id="auth-link" class="nav-link">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero cutout">
+      <h2 class="hero-title">WELCOME TO THE ZINE</h2>
+      <p class="hero-lead">Patches, posts and paper‑cut threads — all the chaos you expect.</p>
+    </section>
+
+    <section class="categories cutout">
+      <h3 class="section-title">BOARDS</h3>
+      <ul>
+        <li><a href="category.html?cat=general">General — noise and chat</a></li>
+        <li><a href="category.html?cat=help">Help & Support — we patch things here</a></li>
+        <li><a href="category.html?cat=announcements">Announcements — badges & drops</a></li>
+      </ul>
+    </section>
+
+    <section class="collage">
+      <article class="card cutout">
+        <h4 class="card-title sticker-sm">Pinned Zine</h4>
+        <p class="muted">A short welcome post laid out like a ripped flyer.</p>
+      </article>
+
+      <article class="card cutout">
+        <h4 class="card-title sticker-sm">Rules</h4>
+        <p class="muted">Keep it anarchic, but kind. No doxxing.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2026 My Community — cut & paste responsibly</small>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
