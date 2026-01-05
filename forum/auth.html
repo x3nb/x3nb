@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login / Register</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Memberstack script example:
+  <script src="https://api.memberstack.io/static/memberstack.js" data-memberstack="YOUR_MEMBERSTACK_ID" defer></script>
+  -->
+</head>
+<body>
+  <header class="site-header container">
+    <h1 class="brand">My Community</h1>
+    <nav><a href="index.html">Home</a></nav>
+  </header>
+
+  <main class="container auth-page">
+    <section class="auth-forms">
+      <div class="card">
+        <h2>Log in</h2>
+        <!-- If using Memberstack, replace form with their hosted form or call their API -->
+        <form id="login-form" action="#" method="post">
+          <label>Email <input name="email" type="email" required></label>
+          <label>Password <input name="password" type="password" required></label>
+          <button class="btn primary" type="submit">Log in</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Create account</h2>
+        <form id="register-form" action="#" method="post">
+          <label>Name <input name="name" type="text" required></label>
+          <label>Email <input name="email" type="email" required></label>
+          <label>Password <input name="password" type="password" required></label>
+          <button class="btn" type="submit">Create account</button>
+        </form>
+        <p class="muted">Tip: Use your membership provider's hosted signup page for secure password handling (Memberstack/Memberful).</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
