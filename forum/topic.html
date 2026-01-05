@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Topic — My Community</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Paste forum embed or provider scripts here -->
+  <!-- Circle embed example placeholder -->
+</head>
+<body>
+  <header class="site-header container">
+    <h1 class="brand">My Community</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="category.html">Boards</a>
+      <a href="auth.html">Log in</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <article class="topic-detail">
+      <h2 id="topic-title">Sample Topic Title</h2>
+      <div class="post meta">
+        <img class="avatar" src="https://www.gravatar.com/avatar?d=mp" alt="avatar" />
+        <div class="post-body">
+          <p>This is the topic body — in an embedded forum this content is provided by the forum provider.</p>
+        </div>
+      </div>
+
+      <section class="replies" id="replies">
+        <h3>Replies</h3>
+        <!-- If embedding Circle, put the Circle embed code here -->
+        <div id="circle-embed-target">
+          <p>Embed or replies will appear here if you added Circle/Discourse embed.</p>
+        </div>
+      </section>
+
+      <section class="reply-form" id="reply-form">
+        <h3>Post a reply</h3>
+        <div class="warning gate-warning" data-gated>
+          <p>Only members can post replies. (Example gating via Memberstack/Memberful)</p>
+          <a class="btn" href="auth.html">Log in / Join</a>
+        </div>
+
+        <!-- If you use Memberstack you can hide/show this form via their JS API when user is logged in -->
+        <form id="post-reply" class="hidden" action="#" method="post">
+          <textarea name="body" rows="4" placeholder="Write your reply..."></textarea>
+          <button class="btn primary" type="submit">Submit reply</button>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
