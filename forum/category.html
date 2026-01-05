@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Category — My Community</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Memberstack / Memberful script placeholder -->
+</head>
+<body>
+  <header class="site-header container">
+    <h1 class="brand">My Community</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="auth.html">Log in</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2 id="category-title">Category</h2>
+
+    <div class="topic-list">
+      <!-- Static sample topics; in production you can embed Circle topics or link to Discourse -->
+      <article class="topic">
+        <h3><a href="topic.html?topic=1">Welcome to the community</a></h3>
+        <p class="meta">Started by Admin • 12 replies</p>
+      </article>
+
+      <article class="topic">
+        <h3><a href="topic.html?topic=2">Site rules and guidelines</a></h3>
+        <p class="meta">Started by Admin • 4 replies</p>
+      </article>
+    </div>
+
+    <a class="btn primary" href="topic.html?new=1" id="new-topic-btn">Start new topic</a>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
