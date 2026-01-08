@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Romantic Rooms</title>
+<!-- Google Fonts for romantic and terminal fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet" />
+
+<style>
+  /* Reset and base styles */
+  body {
+    margin: 0;
+    font-family: 'Source Code Pro', monospace;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* Loading overlay with gaussian blur and rose-red-ombre violet overlay */
+  #loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background: linear-gradient(to bottom, rgba(255, 0, 127, 0.5), rgba(148, 0, 211, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    font-family: 'Great Vibes', cursive;
+    text-align: center;
+    padding: 20px;
+  }
+
+  #loading h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+
+  /* Main container for rooms */
+  #container {
+    display: none;
+    padding: 20px;
+  }
+
+  /* Navigation menu styles */
+  #navMenu {
+    display: none; /* Hidden initially */
+    margin-bottom: 20px;
+  }
+
+  /* Title and headlines styles */
+  h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2em;
+    margin-top: 20px;
+  }
+
+  /* Room styles */
+  .room {
+    display: none;
+    margin-top: 20px;
+  }
+
+  /* Active room */
+  .active {
+    display: block;
+  }
+
+  /* Image styles */
+  .room img {
+    max-width: 300px;
+    height: auto;
+    border: 4px solid #fff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  /* Icon/button to open drawer */
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 10px;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background 0.2s;
+  }
+  .icon-button:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* Drawer styles */
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: rgba(255,255,255,0.95);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.5);
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 10000;
+  }
+
+  .drawer.open {
+    right: 0;
+  }
+
+  /* Video section in last room */
+  #video-section {
+    margin-top: 20px;
+  }
+
+  /* Social links */
+  .social-links a {
+    margin-right: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+  }
+
+  /* Riddle input styles */
+  #riddle-input {
+    padding: 10px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1em;
+    width: 80%;
+    max-width: 400px;
+    margin-top: 10px;
+  }
+
+  /* Button styles */
+  button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff69b4;
+    color: #fff;
+  }
+
+  button:hover {
+    background-color: #ff85c1;
+  }
+
+  /* Specific styles for navigation buttons */
+  .nav-button {
+    background-color: transparent;
+    border: 2px solid #fff;
+    margin: 5px;
+  }
+  .nav-button:hover {
+    background-color: rgba(255,255,255,0.2);
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div id="loading">
+  <h1>❤️ Welcome to Our Love Journey ❤️</h1>
+  <p>Loading...</p>
+</div>
+
+<!-- Main Container -->
+<div id="container">
+
+  <!-- Navigation Buttons for Rooms (initially hidden) -->
+  <div id="navMenu" style="margin-bottom:20px;">
+    <button class="nav-button" onclick="showRoom(1)">Home</button>
+    <button class="nav-button" onclick="showRoom(2)">Favorites</button>
+    <button class="nav-button" onclick="showRoom(3)">Poems</button>
+    <button class="nav-button" onclick="showRoom(4)">Love Letters</button>
+    <button class="nav-button" onclick="showRoom(5)">About Me</button>
+  </div>
+
+  <!-- Room 1: The Garden of Love -->
+  <div id="room1" class="room active">
+    <h2>Room 1: The Garden of Love</h2>
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60" alt="Garden of Love" />
+    <p>Answer the riddle to unlock the menu and explore more:</p>
+    <p><em>"My love, a tale of two hearts, in Juliet's garden, where Romeo departs. What am I?"</em></p>
+    <input type="text" id="riddle-input" placeholder="Your answer here" />
+    <button onclick="checkAnswer()">Submit</button>
+    <p id="riddle-feedback" style="margin-top:10px; color: yellow;"></p>
+  </div>
+
+  <!-- Other rooms (hidden initially) -->
+  <div id="room2" class="room">
+    <h2>Favorites</h2>
+    <p>Here are some of our favorites:</p>
+    <ul>
+      <li>Favorite Song: "All You Need Is Love" by The Beatles</li>
+      <li>Favorite Movie: "Romeo + Juliet"</li>
+      <li>Favorite Quote: "Love looks not with the eyes, but with the mind." - Shakespeare</li>
+    </ul>
+  </div>
+
+  <div id="room3" class="room">
+    <h2>Poems of Love</h2>
+    <p>Here's a romantic poem for you:</p>
+    <blockquote style="font-family: 'Great Vibes', cursive; font-size: 1.5em; margin:20px 0;">
+      "Shall I compare thee to a summer's day? <br>
+      Thou art more lovely and more temperate." <br>
+      — William Shakespeare
+    </blockquote>
+  </div>
+
+  <div id="room4" class="room">
+    <h2>Love Letters & Messages</h2>
+    <p>Scroll through some love letters:</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <div style="border:1px solid #fff; padding:10px; border-radius:8px; background: rgba(255,255,255,0.1);">
+        <p>"My dearest, every moment with you is a treasure..."</p>
+      </div>
+      <div style="border:1px solid #fff; padding:10px; border-radius:8px; background: rgba(255,255,255,0.1);">
+        <p>"Forever yours, in love and in life..."</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="room5" class="room">
+    <h2>About Me & External Links</h2>
+    <p>Connect with me on social media:</p>
+    <div class="social-links">
+      <a href="https://youtube.com" target="_blank">YouTube</a>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+    </div>
+  </div>
+</div>
+
+<!-- Drawer for Mystery Music Files -->
+<div id="musicDrawer" class="drawer">
+  <h3>Mystery Music</h3>
+  <audio controls style="width: 100%;">
+    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  <button onclick="closeDrawer()" style="margin-top:10px;">Close</button>
+</div>
+
+<script>
+  // Wait for DOM to load
+  document.addEventListener('DOMContentLoaded', () => {
+    // Hide loading after delay
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('container').style.display = 'block';
+    }, 3000); // 3 seconds loading
+  });
+
+  // Riddle answer checking
+  const correctAnswer = "love"; // The answer to the riddle
+  function checkAnswer() {
+    const input = document.getElementById('riddle-input').value.trim().toLowerCase();
+    const feedback = document.getElementById('riddle-feedback');
+    if (input === correctAnswer) {
+      feedback.style.color = 'lightgreen';
+      feedback.innerText = "Correct! The menu is now unlocked.";
+      // Reveal the menu
+      document.getElementById('navMenu').style.display = 'block';
+      // Optional: auto navigate to Favorites after correct answer
+      // showRoom(2);
+    } else {
+      feedback.style.color = 'yellow';
+      feedback.innerText = "Try again!";
+    }
+  }
+
+  // Show specific room
+  function showRoom(roomNumber) {
+    for (let i=1; i<=5; i++) {
+      document.getElementById('room' + i).classList.remove('active');
+    }
+    document.getElementById('room' + roomNumber).classList.add('active');
+  }
+
+  // Drawer functions
+  function openDrawer() {
+    document.getElementById('musicDrawer').classList.add('open');
+  }
+  function closeDrawer() {
+    document.getElementById('musicDrawer').classList.remove('open');
+  }
+</script>
+
+<!-- Floating button to open music drawer -->
+<script>
+  // Create a floating button for music drawer access
+  const musicBtn = document.createElement('button');
+  musicBtn.innerHTML = '🎵';
+  musicBtn.title = "Open Mystery Music";
+  musicBtn.className = 'icon-button';
+  musicBtn.style.position = 'fixed';
+  musicBtn.style.bottom = '20px';
+  musicBtn.style.right = '20px';
+  musicBtn.onclick = openDrawer;
+  // Initially hide the button
+  musicBtn.style.display = 'none';
+  document.body.appendChild(musicBtn);
+
+  // Show the button after correct answer
+  function showMusicButton() {
+    musicBtn.style.display = 'block';
+  }
+</script>
+
+<!-- Call showMusicButton() after correct answer -->
+<script>
+  function checkAnswer() {
+    const input = document.getElementById('riddle-input').value.trim().toLowerCase();
+    const feedback = document.getElementById('riddle-feedback');
+    if (input === correctAnswer) {
+      feedback.style.color = 'lightgreen';
+      feedback.innerText = "Correct! The menu is now unlocked.";
+      // Reveal the menu
+      document.getElementById('navMenu').style.display = 'block';
+      // Show music button
+      showMusicButton();
+    } else {
+      feedback.style.color = 'yellow';
+      feedback.innerText = "Try again!";
+    }
+  }
+</script>
+
+</body>
+</html>
