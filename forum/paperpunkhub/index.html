@@ -199,136 +199,133 @@
   </div>
 
 </div>
-
-<script>
-  // Generate floating shapes
-  const shapeCount = 20;
-  const shapesContainer = document.getElementById('shapes');
-  for (let i=0; i<shapeCount; i++) {
-    const shape = document.createElement('div');
-    shape.className = 'shape';
-    shape.style.width = (10 + Math.random()*30) + 'px';
-    shape.style.height = shape.style.width;
-    shape.style.top = Math.random() * 100 + '%';
-    shape.style.left = Math.random() * 100 + '%';
-    shape.style.background = `linear-gradient(45deg, #f0f, #0ff, #ff0)`;
-    shape.style.transform = `rotate(${Math.random()*360}deg)`;
-    shape.style.animationDuration = (10 + Math.random()*20) + 's';
-    shapesContainer.appendChild(shape);
-  }
-
-  // Fake user state
-  let currentUser = null;
-
-  // Show auth forms
-  function showSignUp() {
-    document.getElementById('auth-form').style.display = 'block';
-    document.getElementById('auth-buttons').style.display = 'none';
-  }
-  function showSignIn() {
-    document.getElementById('auth-form').style.display = 'block';
-    document.getElementById('auth-buttons').style.display = 'none';
-  }
-  function cancelAuth() {
-    document.getElementById('auth-form').style.display = 'none';
-    document.getElementById('auth-buttons').style.display = 'block';
-  }
-
-  // Initialize Supabase
-  const supabaseUrl = 'https://mtkujqqzddyxtjeszuzz.supabase.co'; // <-- Replace with your
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10a3VqcXF6ZGR5eHRqZXN6dXp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg2MjU4NDMsImV4cCI6MjA4NDIwMTg0M30.bImNbkfZkrfZJhCLlfKTxg8-RQUZWTfZovwN0z3aQjE'; // <-- Replace with your
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-  // Authenticate
-  async function submitAuth() {
-    const email = document.getElementById('auth-email').value;
-    const password = document.getElementById('auth-password').value;
-    try {
-      const { user, error } = await supabase.auth.signIn({ email, password });
-      if (error) {
-        // If login fails, try signUp
-        const { user: newUser, error: signUpError } = await supabase.auth.signUp({ email, password });
-        if (signUpError) {
-          alert(signUpError.message);
-          return;
-        } else {
-          currentUser = newUser;
-        }
-      } else {
-        currentUser = user;
-      }
-      document.getElementById('auth-form').style.display = 'none';
-      document.getElementById('auth-buttons').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
-      showGreeting();
-      loadProfileImage();
-    } catch (err) {
-      alert('Error: ' + err.message);
+ <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Generate floating shapes
+    const shapeCount = 20;
+    const shapesContainer = document.getElementById('shapes');
+    for (let i=0; i<shapeCount; i++) {
+      const shape = document.createElement('div');
+      shape.className = 'shape';
+      shape.style.width = (10 + Math.random()*30) + 'px';
+      shape.style.height = shape.style.width;
+      shape.style.top = Math.random() * 100 + '%';
+      shape.style.left = Math.random() * 100 + '%';
+      shape.style.background = `linear-gradient(45deg, #f0f, #0ff, #ff0)`;
+      shape.style.transform = `rotate(${Math.random()*360}deg)`;
+      shape.style.animationDuration = (10 + Math.random()*20) + 's';
+      shapesContainer.appendChild(shape);
     }
-  }
 
-  // Load profile image (simulate glow)
-  function loadProfileImage() {
-    // Optional: fetch user profile picture or set a default
-    document.getElementById('user-avatar').style.backgroundImage = 'url(https://via.placeholder.com/120x120.png?text=Avatar)';
-  }
+    // Initialize Supabase
+    const supabaseUrl = 'https://mtkujqqzddyxtjeszuzz.supabase.co'; // your project URL
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10a3VqcXF6ZGR5eHRqZXN6dXp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg2MjU4NDMsImV4cCI6MjA4NDIwMTg0M30.bImNbkfZkrfZJhCLlfKTxg8-RQUZWTfZovwN0z3aQjE'; // your actual anon key
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-  // Show greeting
-function showGreeting() {
-  const header = document.getElementById('chat-header');
-  const loading = document.getElementById('loading-indicator');
-  header.innerText = `Welcome, ${currentUser.email}`;
-  loading.style.display = 'none';
+    // Show auth forms
+    window.showSignUp = () => {
+      document.getElementById('auth-form').style.display = 'block';
+      document.getElementById('auth-buttons').style.display = 'none';
+    };
+    window.showSignIn = () => {
+      document.getElementById('auth-form').style.display = 'block';
+      document.getElementById('auth-buttons').style.display = 'none';
+    };
+    window.cancelAuth = () => {
+      document.getElementById('auth-form').style.display = 'none';
+      document.getElementById('auth-buttons').style.display = 'block';
+    };
 
-  const chatDiv = document.getElementById('chat');
-  chatDiv.innerHTML = '';
-  setTimeout(() => {
-    chatDiv.innerHTML = `<p>Hello ${currentUser.email}! Welcome to your punky community!</p>`;
-    document.getElementById('loading-indicator').style.display = 'none';
-    chatDiv.style.display = 'block';
-  }, 1500);
-}
+    // Authenticate
+    window.submitAuth = async () => {
+      const email = document.getElementById('auth-email').value;
+      const password = document.getElementById('auth-password').value;
+      try {
+        const { user, error } = await supabase.auth.signIn({ email, password });
+        if (error) {
+          // If login fails, try signUp
+          const { user: newUser, error: signUpError } = await supabase.auth.signUp({ email, password });
+          if (signUpError) {
+            alert(signUpError.message);
+            return;
+          } else {
+            currentUser = newUser;
+          }
+        } else {
+          currentUser = user;
+        }
+        document.getElementById('auth-form').style.display = 'none';
+        document.getElementById('auth-buttons').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        showGreeting();
+        loadProfileImage();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    };
 
-// Handle menu with synopsis and links
-const menuItems = [
-  {
-    title: 'ABOUT',
-    synopsis: 'Learn about the punky community and its roots.',
-    link: 'https://en.wikipedia.org/wiki/Punk_rock'
-  },
-  {
-    title: 'MUSIC',
-    synopsis: 'Discover punk-inspired tunes and playlists.',
-    link: 'https://www.punknews.org/'
-  },
-  {
-    title: 'SHOP',
-    synopsis: 'Get punk fashion and accessories.',
-    link: 'https://punkclothing.com/'
-  },
-  {
-    title: 'BLOG',
-    synopsis: 'Read stories and updates from the community.',
-    link: 'https://punkblog.com/'
-  }
-];
+    // Load profile image (simulate glow)
+    function loadProfileImage() {
+      document.getElementById('user-avatar').style.backgroundImage = 'url(https://via.placeholder.com/120x120.png?text=Avatar)';
+    }
 
-const menuContainer = document.getElementById('menu');
-const synopsisDiv = document.getElementById('synopsis');
+    // Show greeting
+    window.showGreeting = () => {
+      const header = document.getElementById('chat-header');
+      const loading = document.getElementById('loading-indicator');
+      header.innerText = `Welcome, ${currentUser.email}`;
+      loading.style.display = 'none';
 
-menuItems.forEach(item => {
-  const div = document.createElement('div');
-  div.className = 'menu-item';
-  div.innerText = item.title;
-  div.onclick = () => {
-    // Show synopsis and link
-    synopsisDiv.innerHTML = `
-      <p>${item.synopsis}</p>
-      <a href="${item.link}" target="_blank" style="color:#f0f;">Visit Link</a>
-    `;
-  };
-  menuContainer.appendChild(div);
-});
+      const chatDiv = document.getElementById('chat');
+      chatDiv.innerHTML = '';
+      setTimeout(() => {
+        chatDiv.innerHTML = `<p>Hello ${currentUser.email}! Welcome to your punky community!</p>`;
+        document.getElementById('loading-indicator').style.display = 'none';
+        chatDiv.style.display = 'block';
+      }, 1500);
+    };
+
+    // Handle menu with synopsis and links
+    const menuItems = [
+      {
+        title: 'ABOUT',
+        synopsis: 'Learn about the punky community and its roots.',
+        link: 'https://en.wikipedia.org/wiki/Punk_rock'
+      },
+      {
+        title: 'MUSIC',
+        synopsis: 'Discover punk-inspired tunes and playlists.',
+        link: 'https://www.punknews.org/'
+      },
+      {
+        title: 'SHOP',
+        synopsis: 'Get punk fashion and accessories.',
+        link: 'https://punkclothing.com/'
+      },
+      {
+        title: 'BLOG',
+        synopsis: 'Read stories and updates from the community.',
+        link: 'https://punkblog.com/'
+      }
+    ];
+
+    const menuContainer = document.getElementById('menu');
+    const synopsisDiv = document.getElementById('synopsis');
+
+    menuItems.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'menu-item';
+      div.innerText = item.title;
+      div.onclick = () => {
+        // Show synopsis and link
+        synopsisDiv.innerHTML = `
+          <p>${item.synopsis}</p>
+          <a href="${item.link}" target="_blank" style="color:#f0f;">Visit Link</a>
+        `;
+      };
+      menuContainer.appendChild(div);
+    });
+  });
 </script>
 </body>
 </html>
