@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>My Punky Community</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- Gamer font -->
+<link href="https://fonts.googleapis.com/css2?family=Vast+Shadow&display=swap" rel="stylesheet"> <!-- Distorted punky font -->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    overflow: hidden;
+  }
+
+  /* Floating geometric shapes background */
+  .background-shapes {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    mix-blend-mode: screen;
+    animation: floatShape 20s infinite ease-in-out;
+  }
+  @keyframes floatShape {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-50px) scale(1.2); }
+    100% { transform: translateY(0) scale(1); }
+  }
+
+  /* Container styles */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    min-height: 100vh;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  /* Paper with black background and cutout style */
+  .paper {
+    background: #000;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7), inset 0 0 10px rgba(0,0,0,0.4);
+    border: 4px solid #222;
+    margin: 20px;
+    position: relative;
+    font-family: 'Vast Shadow', cursive;
+    color: #fff;
+  }
+  /* Avatar with glow */
+  .avatar {
+    width: 120px;
+    height: 120px;
+    background: #222;
+    border-radius: 50%;
+    border: 4px solid #444;
+    margin: 20px auto;
+    background-image: url('https://via.placeholder.com/120x120.png?text=Avatar');
+    background-size: cover;
+    transform: rotate(-5deg);
+    box-shadow: 0 0 20px 8px rgba(255, 0, 123, 0.7);
+    transition: box-shadow 0.3s ease;
+  }
+
+  /* Buttons styling */
+  button {
+    background: transparent;
+    border: 3px solid #222;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #111;
+    border-color: #f0f;
+  }
+
+  /* Menu styles */
+  .menu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .menu-item {
+    margin: 10px;
+    padding: 15px 25px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid #444;
+    border-radius: 8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .menu-item:hover {
+    background: #222;
+    border-color: #00f;
+  }
+
+  /* Chat header and greeting */
+  .chat-header {
+    font-family: 'Vast Shadow', cursive;
+    font-size: 16px;
+    margin-top: 40px;
+    color: #fff;
+  }
+  .loading {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: #111;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    animation: flicker 1s infinite;
+  }
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Greet message with violet ombré and rose-red */
+  .greet {
+    font-family: 'Vast Shadow', cursive;
+    font-size: 18px;
+    background: linear-gradient(45deg, violet, hotpink, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 10px;
+  }
+
+  /* Style for synopsis display */
+  #synopsis {
+    margin-top: 15px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: #fff;
+    max-width: 600px;
+    text-align: center;
+    padding: 10px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.4);
+  }
+</style>
+</head>
+<body>
+
+<!-- Background floating shapes -->
+<div class="background-shapes" id="shapes"></div>
+
+<!-- Main container -->
+<div class="container">
+
+  <!-- Avatar with glow -->
+  <div class="avatar" id="user-avatar"></div>
+
+  <!-- Sign Up / Log In Buttons -->
+  <div id="auth-buttons">
+    <button onclick="showSignUp()">Sign Up</button>
+    <button onclick="showSignIn()">Log In</button>
+  </div>
+
+  <!-- Login/Signup forms -->
+  <div class="paper" id="auth-form" style="display:none;">
+    <h2 style="font-family:'Vast Shadow', cursive;">Welcome to the Punk Tribe</h2>
+    <input type="email" id="auth-email" placeholder="Email" style="margin:10px; padding:10px; font-family:'Press Start 2P';" /><br>
+    <input type="password" id="auth-password" placeholder="Password" style="margin:10px; padding:10px; font-family:'Press Start 2P';" /><br>
+    <button onclick="submitAuth()">Submit</button>
+    <button onclick="cancelAuth()">Cancel</button>
+  </div>
+
+  <!-- Content after login -->
+  <div class="paper" id="main-content" style="display:none;">
+    <!-- Greeting with loading -->
+    <div class="chat-header" id="chat-header">Loading...</div>
+    <div class="loading" id="loading-indicator">Connecting to the punk chat...</div>
+    <div id="chat" class="greet"></div>
+
+    <!-- Menu -->
+    <div class="menu" id="menu"></div>
+    <!-- Synopsis display -->
+    <div id="synopsis"></div>
+  </div>
+
+</div>
+
+<script>
+  // Generate floating shapes
+  const shapeCount = 20;
+  const shapesContainer = document.getElementById('shapes');
+  for (let i=0; i<shapeCount; i++) {
+    const shape = document.createElement('div');
+    shape.className = 'shape';
+    shape.style.width = (10 + Math.random()*30) + 'px';
+    shape.style.height = shape.style.width;
+    shape.style.top = Math.random() * 100 + '%';
+    shape.style.left = Math.random() * 100 + '%';
+    shape.style.background = `linear-gradient(45deg, #f0f, #0ff, #ff0)`;
+    shape.style.transform = `rotate(${Math.random()*360}deg)`;
+    shape.style.animationDuration = (10 + Math.random()*20) + 's';
+    shapesContainer.appendChild(shape);
+  }
+
+  // Fake user state
+  let currentUser = null;
+
+  // Show auth forms
+  function showSignUp() {
+    document.getElementById('auth-form').style.display = 'block';
+    document.getElementById('auth-buttons').style.display = 'none';
+  }
+  function showSignIn() {
+    document.getElementById('auth-form').style.display = 'block';
+    document.getElementById('auth-buttons').style.display = 'none';
+  }
+  function cancelAuth() {
+    document.getElementById('auth-form').style.display = 'none';
+    document.getElementById('auth-buttons').style.display = 'block';
+  }
+
+  // Initialize Supabase
+  const supabaseUrl = 'YOUR_SUPABASE_URL'; // <-- Replace with your
+  const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; // <-- Replace with your
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+  // Authenticate
+  async function submitAuth() {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+    try {
+      const { user, error } = await supabase.auth.signIn({ email, password });
+      if (error) {
+        // If login fails, try signUp
+        const { user: newUser, error: signUpError } = await supabase.auth.signUp({ email, password });
+        if (signUpError) {
+          alert(signUpError.message);
+          return;
+        } else {
+          currentUser = newUser;
+        }
+      } else {
+        currentUser = user;
+      }
+      document.getElementById('auth-form').style.display = 'none';
+      document.getElementById('auth-buttons').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      showGreeting();
+      loadProfileImage();
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
+  }
+
+  // Load profile image (simulate glow)
+  function loadProfileImage() {
+    // Optional: fetch user profile picture or set a default
+    document.getElementById('user-avatar').style.backgroundImage = 'url(https://via.placeholder.com/120x120.png?text=Avatar)';
+  }
+
+  // Show greeting
+function showGreeting() {
+  const header = document.getElementById('chat-header');
+  const loading = document.getElementById('loading-indicator');
+  header.innerText = `Welcome, ${currentUser.email}`;
+  loading.style.display = 'none';
+
+  const chatDiv = document.getElementById('chat');
+  chatDiv.innerHTML = '';
+  setTimeout(() => {
+    chatDiv.innerHTML = `<p>Hello ${currentUser.email}! Welcome to your punky community!</p>`;
+    document.getElementById('loading-indicator').style.display = 'none';
+    chatDiv.style.display = 'block';
+  }, 1500);
+}
+
+// Handle menu with synopsis and links
+const menuItems = [
+  {
+    title: 'ABOUT',
+    synopsis: 'Learn about the punky community and its roots.',
+    link: 'https://en.wikipedia.org/wiki/Punk_rock'
+  },
+  {
+    title: 'MUSIC',
+    synopsis: 'Discover punk-inspired tunes and playlists.',
+    link: 'https://www.punknews.org/'
+  },
+  {
+    title: 'SHOP',
+    synopsis: 'Get punk fashion and accessories.',
+    link: 'https://punkclothing.com/'
+  },
+  {
+    title: 'BLOG',
+    synopsis: 'Read stories and updates from the community.',
+    link: 'https://punkblog.com/'
+  }
+];
+
+const menuContainer = document.getElementById('menu');
+const synopsisDiv = document.getElementById('synopsis');
+
+menuItems.forEach(item => {
+  const div = document.createElement('div');
+  div.className = 'menu-item';
+  div.innerText = item.title;
+  div.onclick = () => {
+    // Show synopsis and link
+    synopsisDiv.innerHTML = `
+      <p>${item.synopsis}</p>
+      <a href="${item.link}" target="_blank" style="color:#f0f;">Visit Link</a>
+    `;
+  };
+  menuContainer.appendChild(div);
+});
+</script>
+</body>
+</html>
