@@ -356,7 +356,12 @@ menuItems.forEach(i => {
   const m=document.createElement('div');
   m.className='menu-item';
   m.innerText=i.title;
-  m.onclick=()=>{ document.getElementById('synopsis').innerHTML=`<p>${i.desc}</p><a href="${i.link}" target="_blank" style="color:#eee;">Visit</a>`; }
+  m.onclick=()=>{
+    // Add glow effect
+    m.classList.add('clicked');
+    setTimeout(() => m.classList.remove('clicked'), 1000); // Remove after 1 second
+    document.getElementById('synopsis').innerHTML=`<p>${i.desc}</p><a href="${i.link}" target="_blank" style="color:#eee;">Visit</a>`;
+  }
   menuDiv.appendChild(m);
 });
 
