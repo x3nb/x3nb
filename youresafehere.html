@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ZENZINE Membership</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+
+<style>
+body {
+  margin: 0; padding: 0;
+  background: #fff;
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Container for the main content */
+#main-container {
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Glowing login buttons */
+#auth-buttons button {
+  padding: 8px 12px; 
+  background:#4B0082; /* Deep purple */
+  color:#fff; 
+  border:none; 
+  border-radius:4px; 
+ cursor:pointer; 
+  font-family:'Press Start 2P'; 
+  font-size:0.8em;
+  margin: 8px;
+  /* Glowing animation */
+  animation: glowPulse 2s infinite alternate;
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+}
+#auth-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px 4px rgba(107, 13, 173, 0.4);
+  background:#6A0DAD;
+}
+
+/* Glow pulsing animation */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 5px 2px rgba(107, 13, 173, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 15px 4px rgba(107, 13, 173, 0.6);
+  }
+}
+
+/* Style for the main content area after login */
+#content-area {
+  display: none; /* Hidden until logged in */
+  margin-top: 20px;
+}
+
+/* Style for login/signup form */
+#auth-form {
+  display: none;
+  margin-top: 20px;
+}
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+#auth-form input {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Press Start 2P';
+  font-size: 0.8em;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+#auth-form input:focus {
+  box-shadow: 0 0 10px rgba(107, 13, 173, 0.5);
+}
+#auth-form button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3a4e89;
+  color: #fff;
+  font-family: 'Press Start 2P';
+  font-size: 0.8em;
+  cursor:pointer;
+  width: 100%;
+  transition: background 0.2s, transform 0.2s;
+}
+#auth-form button:hover {
+  background-color: #5a68b5;
+  transform: translateY(-2px);
+}
+#message {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #333;
+}
+</style>
+</head>
+<body>
+
+<div id="main-container">
+
+  <!-- Auth Buttons -->
+  <div id="auth-buttons">
+    <button onclick="showSignUp()">Sign Up</button>
+    <button onclick="showSignIn()">Log In</button>
+    <button onclick="logout()" style="background:#B22222;">Log Out</button>
+  </div>
+
+  <!-- Authentication Form -->
+  <div id="auth-form">
+    <h1 id="form-title">Sign Up</h1>
+    <input type="email" id="email" placeholder="Enter your email" />
+    <input type="password" id="password" placeholder="Enter password" />
+    <button onclick="submitAuth()">Submit</button>
+    <div id="message"></div>
+  </div>
+
+  <!-- Personalized Content after login -->
+  <div id="content-area">
+    <h1>Welcome to ZENZINE!</h1>
+    <p>You are now logged in.</p>
+  </div>
+
+</div>
+
+<script>
+  // Initialize Supabase
+  const supabaseUrl = 'YOUR_SUPABASE_URL'; // <-- replace this
+  const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; // <-- replace this
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+  // Show Sign Up form
+  function showSignUp() {
+    document.getElementById('auth-form').style.display='block';
+    document.getElementById('auth-buttons').style.display='none';
+    document.getElementById('form-title').innerText='Sign Up';
+    document.getElementById('message').innerText='';
+    document.getElementById('email').value='';
+    document.getElementById('password').value='';
+  }
+
+  // Show Sign In form
+  function showSignIn() {
+    document.getElementById('auth-form').style.display='block';
+    document.getElementById('auth-buttons').style.display='none';
+    document.getElementById('form-title').innerText='Log In';
+    document.getElementById('message').innerText='';
+    document.getElementById('email').value='';
+    document.getElementById('password').value='';
+  }
+
+  // Cancel auth
+  function cancelAuth() {
+    document.getElementById('auth-form').style.display='none';
+    document.getElementById('auth-buttons').style.display='block';
+    document.getElementById('message').innerText='';
+  }
+
+  // Submit auth (signup or login)
+  async function submitAuth() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const msgDiv = document.getElementById('message');
+
+    if (!email || !password) {
+      msgDiv.innerText='Please fill in all fields.';
+      return;
+    }
+
+    msgDiv.innerText='Processing...';
+
+    if (document.getElementById('form-title').innerText === 'Sign Up') {
+      // Sign up
+      const { user, error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        msgDiv.innerText='Error: ' + error.message;
+      } else {
+        msgDiv.innerText='Signup successful! Please check your email for confirmation.';
+        // Optionally, auto-login after signup:
+        // loginUser(email, password);
+      }
+    } else {
+      // Sign in
+      const { user, error } = await supabase.auth.signIn({ email, password });
+      if (error) {
+        msgDiv.innerText='Error: ' + error.message;
+      } else {
+        msgDiv.innerText='Logged in!';
+        showUserContent(user);
+      }
+    }
+  }
+
+  // Show user content after login
+  function showUserContent(user) {
+    document.getElementById('auth-form').style.display='none';
+    document.getElementById('auth-buttons').style.display='none';
+    document.getElementById('content-area').style.display='block';
+  }
+
+  // Logout
+  async function logout() {
+    await supabase.auth.signOut();
+    // Reset UI
+    document.getElementById('content-area').style.display='none';
+    document.getElementById('auth-buttons').style.display='block';
+    alert('You are logged out.');
+  }
+
+  // Check auth state on page load
+  window.onload = async () => {
+    const user = await supabase.auth.getUser();
+    if (user.data.user) {
+      showUserContent(user.data.user);
+    }
+  };
+</script>
+</body>
+</html>
