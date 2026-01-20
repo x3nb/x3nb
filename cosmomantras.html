@@ -12,8 +12,8 @@
 <style>
 body {
   margin: 0; padding: 0;
-  /* Stabilized indigo to cerulean gradient background */
-  background: linear-gradient(135deg, #4B0082 0%, #007BA7 100%);
+  /* Cosmic radial gradient background from indigo center to cerulean edges for a starry void feel */
+  background: radial-gradient(circle at center, #4B0082 0%, #007BA7 100%);
   font-family: 'Press Start 2P', cursive;
   color: #333;
   overflow: hidden;
@@ -21,21 +21,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Subtle film grain overlay for cinematic atmosphere, adjusted for blue tones */
-body::before {
-  content: "";
-  position: fixed;
-  top:0; left:0; right:0; bottom:0;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0,123,167,0.02),
-    rgba(0,123,167,0.02) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  pointer-events: none;
-  z-index: 2;
-}
+/* Removed film grain overlay to eliminate gradient lines and enhance cosmic feel */
 
 /* Container for twinkling cosmos stars */
 #starsContainer {
@@ -105,6 +91,19 @@ button { /* ... */ }
 .menu { /* ... */ }
 #synopsis { /* ... */ }
 
+/* Logout button styling - visible when logged in */
+#logoutButton {
+  display: none; /* Hidden by default */
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: #4B0082;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Press Start 2P';
+}
+
 /* Mantra panel styling */
 #mantraPanel {
   margin-top: 20px; width: 100%; max-width: 600px; display:flex; flex-direction:column; align-items:center; background:#fff; padding:10px; border-radius:8px; box-shadow: inset 4px 4px 8px #ccc, inset -4px -4px 8px #eee;
@@ -149,6 +148,8 @@ button { /* ... */ }
     <img id="avatar-img" src="officialsticker.png" alt="User Avatar" />
     <div id="avatar-title">Punk Zen</div>
   </div>
+  <!-- Logout button - moved here for visibility -->
+  <button id="logoutButton" onclick="logout()">Log Out</button>
   <div id="auth-buttons">
     <button onclick="showSignUp()">Sign Up</button>
     <button onclick="showSignIn()">Log In</button>
@@ -195,8 +196,8 @@ button { /* ... */ }
 </div>
 
 <script>
-const supabaseUrl='https://hwymepujsvfqjkbullaf.supabase.co'; // your URL
-const supabaseKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3eW1lcHVqc3ZmcWprYnVsbGFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MDczOTQsImV4cCI6MjA4NDI4MzM5NH0.V6-Cm331IocSXDqe-v6iAZA3TV1STyEHyQI43lcXU_4'; // your API key
+const supabaseUrl='removed for security'; // your URL
+const supabaseKey='removed for security'; // your API key
 window.supabase=supabase.createClient(supabaseUrl,supabaseKey);
 
 let currentUser=null;
@@ -228,6 +229,29 @@ function generateStars() {
 
 // Call generateStars on page load
 window.addEventListener('load', generateStars);
+
+// Logout function
+async function logout() {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    alert('Error logging out: ' + error.message);
+  } else {
+    // Reset UI to login state
+    currentUser = null;
+    username = null;
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('auth-buttons').style.display = 'flex';
+    document.getElementById('logoutButton').style.display = 'none'; // Hide logout button
+    document.getElementById('musicIcon').style.display = 'none';
+    document.getElementById('musicDrawer').style.display = 'none';
+    document.getElementById('chat-header').innerText = 'Please log in';
+    document.getElementById('chat').innerHTML = '';
+    document.getElementById('synopsis').innerHTML = '';
+    // Clear mantras
+    clearMantras();
+    if (mantraInterval) clearInterval(mantraInterval);
+  }
+}
 
 function showSignUp(){ showAuthForm('signup'); }
 function showSignIn(){ showAuthForm('signin'); }
@@ -269,6 +293,7 @@ async function submitAuth(){
     document.getElementById('musicIcon').style.display='block';
     document.getElementById('musicDrawer').style.display='block';
     document.getElementById('main-content').style.display='block';
+    document.getElementById('logoutButton').style.display = 'block'; // Show logout button
     updateGreeting();
     document.getElementById('auth-form').style.display='none';
     document.getElementById('auth-buttons').style.display='none';
