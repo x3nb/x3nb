@@ -262,14 +262,16 @@ body.login-mode .content {
     <button onclick="showSignIn()">Log In</button>
   </div>
   <div id="auth-form" style="display:none;">
-    <h2>Welcome to the Punk Tribe</h2>
-    <input type="text" id="signup-username" placeholder="Choose a username" />
-    <input type="email" id="auth-email" placeholder="Email" />
-    <input type="password" id="auth-password" placeholder="Password" />
+  <h2>Welcome to the Punk Tribe</h2>
+  <input type="text" id="signup-username" placeholder="Choose a username" />
+  <input type="email" id="auth-email" placeholder="Email" />
+  <input type="password" id="auth-password" placeholder="Password" />
+  <div style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
     <button onclick="submitAuth()">Submit</button>
     <button onclick="cancelAuth()">Cancel</button>
-    <div id="signup-message"></div>
   </div>
+  <div id="signup-message"></div>
+</div>
   <!-- Main content after login -->
   <div id="main-content" style="display:none;">
     <div id="chat-header">Please log in</div>
