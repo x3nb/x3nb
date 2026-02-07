@@ -1,5 +1,4 @@
-Hi! I build digital websites enhanced with AI—and create unique digital art.
-Welcome to my project!
+Hi! I build digital websites enhanced with AI—and create unique digital art. Welcome to my project!
 
 🚀 What I Do
 
@@ -34,3 +33,4 @@ Key features
 Example:
 
 This project is an AI-enhanced website that generates personalized art previews using an integrated AI model. The site includes dynamic animations, a clean UI, and customizable user interactions.
+
