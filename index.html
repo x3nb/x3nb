@@ -322,28 +322,7 @@
     musicBtn.style.display = 'block';
   }
 
-  // Create falling hearts effect
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.innerHTML = '❤️';
-    heart.style.position = 'fixed';
-    heart.style.top = '-50px';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.fontSize = (20 + Math.random() * 30) + 'px';
-    heart.style.opacity = Math.random();
-    document.body.appendChild(heart);
-
-    let fallInterval = setInterval(() => {
-      heart.style.top = parseFloat(heart.style.top) + 2 + Math.random() * 3 + 'px';
-      if (parseFloat(heart.style.top) > window.innerHeight) {
-        clearInterval(fallInterval);
-        document.body.removeChild(heart);
-      }
-    }, 50);
-  }
-
-  // Generate hearts periodically
-  setInterval(createHeart, 300);
+   
   // --- Countdown Timer for Valentine's Day ---
   function updateCountdown() {
     const today = new Date();
