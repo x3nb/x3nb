@@ -166,6 +166,44 @@
   .nav-button:hover {
     background-color: rgba(255,255,255,0.2);
   }
+
+  /* Love Message Creator styles */
+  #loveMessageContainer {
+    margin-top: 40px;
+    padding: 10px;
+    border: 2px dashed #fff;
+    border-radius: 10px;
+  }
+
+  #loveMessageContainer h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+
+  #loveMessageInput {
+    padding: 10px;
+    width: 70%;
+    max-width: 400px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+  }
+
+  #sendLoveMessage {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff69b4;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  #sendLoveMessage:hover {
+    background-color: #ff85c1;
+  }
 </style>
 </head>
 <body>
@@ -191,6 +229,13 @@
   <!-- Countdown to Valentine's Day -->
   <h2>Countdown to Valentine's Day</h2>
   <div id="countdown" style="font-size:1.5em; margin-top:10px; color: #ff69b4;"></div>
+  
+  <!-- Love Message Creator -->
+  <div id="loveMessageContainer">
+    <h2>Send a Love Message</h2>
+    <input type="text" id="loveMessageInput" placeholder="Your love message" />
+    <button id="sendLoveMessage" onclick="showLoveMessage()">Send</button>
+  </div>
 
   <!-- Room 1: The Garden of Love -->
   <div id="room1" class="room active">
@@ -322,7 +367,6 @@
     musicBtn.style.display = 'block';
   }
 
-   
   // --- Countdown Timer for Valentine's Day ---
   function updateCountdown() {
     const today = new Date();
@@ -341,8 +385,36 @@
     document.getElementById('countdown').innerText = days + ' days to Valentine\'s Day!';
   }
 
-  // Run once on page load
+  // Call updateCountdown on load
   // Timer already initialized in DOMContentLoaded
+
+  // --- Love Message Animation ---
+  function showLoveMessage() {
+    const message = document.getElementById('loveMessageInput').value.trim();
+    if (message) {
+      const msgDiv = document.createElement('div');
+      msgDiv.innerText = message;
+      msgDiv.style.position = 'fixed';
+      msgDiv.style.bottom = '0px';
+      msgDiv.style.left = Math.random() * 80 + '%'; // random horizontal position
+      msgDiv.style.fontSize = '1.2em';
+      msgDiv.style.color = 'pink';
+      msgDiv.style.opacity = 1;
+      msgDiv.style.zIndex = 9999;
+      document.body.appendChild(msgDiv);
+
+      let pos = 0;
+      const interval = setInterval(() => {
+        pos += 2; // move up faster
+        msgDiv.style.bottom = (pos) + 'px';
+        if (pos > window.innerHeight) {
+          clearInterval(interval);
+          msgDiv.remove();
+        }
+      }, 50);
+      document.getElementById('loveMessageInput').value = '';
+    }
+  }
 </script>
 
 </body>
